@@ -1,0 +1,7 @@
+> Loading > Resolving dependencies 'classpath'Configuring > 0/1 projects > root project > Resolving dependencies ':classpath'1/1 projects > Resolving dependencies ':agent' > Resolving dependencies ':versionManagement' > Resolving dependencies 'detachedConfiguration2' > Resolving dependencies 'detachedConfiguration1'> Building 0% > :clean:clean
+> Building 0%100%
+> Building 100%BUILD SUCCESSFUL
+> Building 100%                
+> Building 100%
+> Building 100%Total time: 2.516 secs
+> Building 100%

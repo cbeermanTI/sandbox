@@ -1,0 +1,114 @@
+Only in Facility: .DS_Store
+Binary files Audit/.asscache and Facility/.asscache differ
+diff -r Audit/.gradle/2.3/taskArtifacts/cache.properties Facility/.gradle/2.3/taskArtifacts/cache.properties
+1c1
+< #Thu Nov 05 16:31:02 PST 2015
+---
+> #Thu Nov 05 16:04:35 PST 2015
+Binary files Audit/.gradle/2.3/taskArtifacts/cache.properties.lock and Facility/.gradle/2.3/taskArtifacts/cache.properties.lock differ
+Binary files Audit/.gradle/2.3/taskArtifacts/fileHashes.bin and Facility/.gradle/2.3/taskArtifacts/fileHashes.bin differ
+Binary files Audit/.gradle/2.3/taskArtifacts/fileSnapshots.bin and Facility/.gradle/2.3/taskArtifacts/fileSnapshots.bin differ
+Binary files Audit/.gradle/2.3/taskArtifacts/outputFileStates.bin and Facility/.gradle/2.3/taskArtifacts/outputFileStates.bin differ
+Binary files Audit/.gradle/2.3/taskArtifacts/taskArtifacts.bin and Facility/.gradle/2.3/taskArtifacts/taskArtifacts.bin differ
+Only in Audit: Audit.iml
+Only in Facility: Facility.iml
+diff -r Audit/build/.mainClass Facility/build/.mainClass
+1c1
+< audit.Application
+\ No newline at end of file
+---
+> facility.Application
+\ No newline at end of file
+Binary files Audit/build/classes/main/BootStrap$_closure1.class and Facility/build/classes/main/BootStrap$_closure1.class differ
+Binary files Audit/build/classes/main/UrlMappings$__clinit__closure1.class and Facility/build/classes/main/UrlMappings$__clinit__closure1.class differ
+Only in Audit/build/classes/main: audit
+Binary files Audit/build/classes/main/com/cds/nexus/XSRef.class and Facility/build/classes/main/com/cds/nexus/XSRef.class differ
+Only in Facility/build/classes/main: facility
+diff -r Audit/build/resources/main/application.yml Facility/build/resources/main/application.yml
+5c5
+<         defaultPackage: audit
+---
+>         defaultPackage: facility
+8c8
+<         name: 'Audit'
+---
+>         name: 'Facility'
+118d117
+< 
+120c119
+<   port: 8081
+---
+>   port: 8082
+Only in Audit/build/resources/main: audit
+Only in Facility/build/resources/main: facility
+diff -r Audit/build.gradle Facility/build.gradle
+21c21
+< group "audit"
+---
+> group "facility"
+diff -r Audit/grails-app/conf/application.yml Facility/grails-app/conf/application.yml
+5c5
+<         defaultPackage: audit
+---
+>         defaultPackage: facility
+118d117
+< 
+120c119
+<   port: 8081
+---
+>   port: 8082
+diff -r Audit/grails-app/controllers/UrlMappings.groovy Facility/grails-app/controllers/UrlMappings.groovy
+3,9c3,9
+<   static mappings = {
+<     "/audit"(resources: 'AuditEvent')
+<     "/$controller/$action?/$id?(.$format)?"{
+<       constraints {
+<         // apply constraints here
+<       }
+<     }
+---
+>     static mappings = {
+>         "/facility"(resources: 'Facility')
+>         "/$controller/$action?/$id?(.$format)?"{
+>             constraints {
+>                 // apply constraints here
+>             }
+>         }
+11,14c11,14
+<     "/"(view:"/index")
+<     "500"(view:'/error')
+<     "404"(view:'/notFound')
+<   }
+---
+>         "/"(view:"/index")
+>         "500"(view:'/error')
+>         "404"(view:'/notFound')
+>     }
+Only in Audit/grails-app/controllers: audit
+Only in Facility/grails-app/controllers: facility
+Only in Audit/grails-app/domain: audit
+Only in Facility/grails-app/domain: facility
+Only in Facility/grails-app/domain: patient
+diff -r Audit/grails-app/init/BootStrap.groovy Facility/grails-app/init/BootStrap.groovy
+1,2c1
+< import audit.AuditEvent
+< import com.cds.nexus.XSRef
+---
+> import facility.Facility
+7,8c6,7
+<       new AuditEvent(json: 'json 1', facilityRef: new XSRef(10, 17, 19), myRef: new XSRef(7, 2, 1)).save()
+<       new AuditEvent(json: 'json 2', facilityRef: new XSRef(10, 17, 22), myRef: new XSRef(7, 2, 2)).save()
+---
+>         new Facility(json: 'Facility 1', myRef: new XSRef(10, 17, 19)).save()
+>         new Facility(json: 'Facility 2', myRef: new XSRef(10, 17, 22)).save()
+Only in Audit/grails-app/init: audit
+Only in Facility/grails-app/init: facility
+Only in Audit/grails-app/views: audit
+Only in Facility/grails-app/views: facility
+diff -r Audit/settings.gradle Facility/settings.gradle
+1c1
+< rootProject.name = 'Audit'
+---
+> rootProject.name = 'Facility'
+Only in Audit/src/test/groovy: audit
+Only in Facility/src/test/groovy: facility
