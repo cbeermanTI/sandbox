@@ -1,4 +1,4 @@
-import audit.AuditEvent
+import audit.PersistedAuditEvent
 import com.cds.nexus.XSRef.XSRefIssuer
 
 class BootStrap {
@@ -9,11 +9,11 @@ class BootStrap {
     short auditServiceId = 7
     XSRefIssuer auditRefIssuer = new XSRefIssuer(auditServiceId)
     byte[] macAddress = XSRefIssuer.getMyMacAddress()
-    new AuditEvent(
+    new PersistedAuditEvent(
         event: 'this happened',
         facilityRef: facilityRefIssuer.issueId(),
         myRef: auditRefIssuer.issueTestId(macAddress, (short) 1, 19)).save()
-    new AuditEvent(
+    new PersistedAuditEvent(
         event: 'something happened',
         facilityRef: facilityRefIssuer.issueId(),
         myRef: auditRefIssuer.issueTestId(macAddress, (short) 1, 22)).save()

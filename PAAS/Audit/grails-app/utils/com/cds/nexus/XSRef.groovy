@@ -1,9 +1,6 @@
 // TODO: move this into a library (plugin) for sharing
 
 package com.cds.nexus
-
-import java.util.concurrent.ConcurrentHashMap
-
 /**
  * XSRef is short for Cross-Service Reference: a way to uniquely identify entities (such as FHIR Resources) across a distributed
  * system of services.
@@ -39,6 +36,7 @@ class XSRef {
     if (!serialized) {
       serialized = s
     }
+    parse()
   }
 
   private void buildBytes() {
@@ -72,6 +70,30 @@ class XSRef {
     serialized
   }
 
+  short getServiceId() {
+    parse()
+    serviceId
+  }
+
+  byte[] getIssuerId() {
+    parse()
+    issuerId
+  }
+
+  short getShardId() {
+    parse()
+    shardId
+  }
+
+  int getInstanceId() {
+    parse()
+    instanceId
+  }
+
+  String toString() {
+    "${serviceId}:${issuerId}:${shardId}:${instanceId}"
+  }
+
   /**
    *   For use only by GORM
    */
@@ -81,22 +103,40 @@ class XSRef {
 
   private void parse() {
     if (!bytes && serialized) {
-      byte[] bytes = Base64.decoder.decode(serialized)
-      serviceId = deserialize(bytes, serviceId, 0, 1)
-      issuerId = deserialize(bytes, issuerId, 2, 9)
-      shardId = deserialize(bytes, shardId, 10, 11)
-      instanceId = deserialize(bytes, instanceId, 12, 15)
+      bytes = Base64.decoder.decode(serialized)
+      serviceId = deserializeShort(bytes, 0, 1)
+      issuerId = deserializeArray(bytes, 2, 9)
+      shardId = deserializeShort(bytes, 10, 11)
+      instanceId = deserializeInt(bytes, 12, 15)
     }
   }
 
-  private deserialize(byte[] bytes, Object number, int from, int to) {
-    number = 0
-    for (int i = from; i++; i < to) {
-      number |= bytes[i]
+  private int deserializeInt(byte[] bytes, int from, int to) {
+    int number = 0
+    for (int i = from; i < to; i++) {
+      number |= bytes[i] & 0xff
       number <<= 8
     }
-    number |= bytes[to]
+    number |= bytes[to] & 0xff
     number
+  }
+
+  private short deserializeShort(byte[] bytes, int from, int to) {
+    short number = 0
+    for (int i = from; i < to; i++) {
+      number |= bytes[i] & 0xff
+      number <<= 8
+    }
+    number |= bytes[to] & 0xff
+    number
+  }
+
+  private byte[] deserializeArray(byte[] bytes, int from, int to) {
+    byte[] theBytes = new byte[to - from + 1]
+    for (int i = from; i <= to; i++) {
+      theBytes[i - from] = bytes[i]
+    }
+    theBytes
   }
 
   public boolean equals(Object o) {
@@ -171,6 +211,11 @@ class XSRef {
         reservations.put(shardId, resInfo)
       }
       int instanceId = resInfo.nextInstanceId()
+      new XSRef(serviceId, myMacAddress, shardId, instanceId)
+    }
+
+    public XSRef issueId( int instanceId ) {
+      short shardId = sharder.pickShard()
       new XSRef(serviceId, myMacAddress, shardId, instanceId)
     }
 

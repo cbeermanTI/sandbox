@@ -2,6 +2,7 @@ class UrlMappings {
 
   static mappings = {
     "/audit"(resources: 'audit')
+    "/$facilityRef/audit"(resources: 'audit')
     "/audit/forFacility/$facilityRef(.$format)?"(controller: 'audit', action: 'index')
 
     "/$controller/$action?/$id?(.$format)?" {
