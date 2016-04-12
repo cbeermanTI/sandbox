@@ -7,11 +7,13 @@ class PersistedAuditEvent {
   String event
   String myRef
   String facilityRef
+  short appId
+  short shardId
+  int   instanceId
 
   static transients = ['myReference', 'facilityReference']
 
   static constraints = {
-    myRef(nullable: true)
     facilityRef(nullable: true)
   }
 
